@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>🍕 Order a Pizza</title>
+</head>
+<body>
+<h2>{{ note }}</h2>
+<form action="{% url 'order' %}" method="post">{% csrf_token %}
+    {{ pizzaform }}
+    <input type="submit" value="Place Order">
+</form>
+
+<br><br>
+Want More than one Pizza?
+
+<form action="{% url 'pizzas' %}" method="get">
+    {{ multiple_form }}
+    <input type="submit" value="Get Pizzas">
+</form>
+</body>
+</html>
