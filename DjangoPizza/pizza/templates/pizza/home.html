@@ -1,10 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>🤠 Django Pizza</title>
-</head>
-<body>
-    <a href="{% url 'order' %}">Order a Pizza</a>
-</body>
-</html>
+{% extends 'pizza/base.html' %}
+<!-- to add images to the project -->
+<!-- you must go to setting.py and add a import os; and also STATIC_ROOT = os.path.join(BASE_DIR, 'static') -->
+<!-- add a static folder to the app and place your items -->
+<!-- 'python manage.py collectstatic' in the terminal -->
+
+{% load static %}
+{% block 'body' %}
+    <div class="text-center">
+        <img src="{% static 'pizzaEatingSnake.jpg' %}" class="img-fluid" alt="Snake Pizza Co.">
+    </div>
+{% endblock %}

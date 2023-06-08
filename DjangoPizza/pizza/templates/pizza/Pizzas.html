@@ -1,3 +1,6 @@
+{% extends 'pizza/base.html' %}
+{% block 'body' %}
+<div class="container text-center">
 <h1>Order Pizzas</h1>
 <h2>{{ note }}</h2>
 
@@ -10,3 +13,5 @@
     {% endfor %}
     <input type="submit" value="Order Pizzas">
 </form>
+</div>
+{% endblock %}

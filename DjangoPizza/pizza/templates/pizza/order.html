@@ -1,16 +1,44 @@
+{% extends 'pizza/base.html' %}
+{% block 'body' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>🍕 Order a Pizza</title>
+
+<!-- BootStrap links -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </head>
+
 <body>
-<h2>{{ note }}</h2>
+{% load widget_tweaks %}
+<h1 class="bold text-center">Order a Pizza!</h1>
+<h2 class="text-bg-danger">{{ note }}</h2>
 {% if created_pizza_pk %}
 <a href="{% url 'edit_order' created_pizza_pk %}">Edit your order</a>
 {% endif %}
-<form action="{% url 'order' %}" method="post">{% csrf_token %}
-    {{ pizzaform }}
+<!-- We made it no Validate so that we can push errors if need be manually check out def order in Views.py -->
+<form action="{% url 'order' %}" method="post" novalidate>
+    {% csrf_token %}
+    <!-- ### Formatting ### -->
+    <!-- .as_p (as paragraph) makes it in one column -->
+    <!-- .as_table and .as_ul can also be used although they will need to be wrapped in <table> / <list> -->
+
+    <!-- ### individual customization ### -->
+    <!-- you can use .topping1.label_tag / .topping1 / .topping1.errors to list individual form customizations -->
+
+    <!-- {{ pizzaform.topping1.label_tag }}
+    {{ pizzaform.topping1 }}
+    {{ pizzaform.topping1.errors }} -->
+    {% for field in pizzaform %}
+    <div class="container">
+    <div  class="form-group">
+        {{ field.errors }}
+        {{ field.label_tag }}
+        {% render_field field class="form-control" %}
+    </div>
+    {% endfor %}
     <input type="submit" value="Place Order">
 </form>
 
@@ -21,5 +49,7 @@ Want More than one Pizza?
     {{ multiple_form }}
     <input type="submit" value="Get Pizzas">
 </form>
+</div>
+{% endblock %}
 </body>
 </html>

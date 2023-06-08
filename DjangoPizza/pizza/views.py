@@ -12,14 +12,19 @@ def order(request):
     multiple_form = MultiPizzaForm()
     if request.method == 'POST':
         filled_form = PizzaForm(request.POST)
+        # If the Form is Valid pass and give a number value.
+        # Else don't give a number value and 
         if filled_form.is_valid():
             created_pizza = filled_form.save()
             created_pizza_pk = created_pizza.id
             note = 'Thanks for your order! your %s %s and %s pizza is on its way!' % (filled_form.cleaned_data['size'],
             filled_form.cleaned_data['topping1'], filled_form.cleaned_data['topping2'],)
-            # The filled form values above will clean the data and add them to the string note.
-            new_form = PizzaForm()
-            return render(request, 'pizza/order.html', {'created_pizza_pk':created_pizza_pk, 'pizzaform': new_form, 'note': note, 'multiple_form':
+            #  ^^^ The filled form values above will clean the data and add them to the string note. ^^^
+            filled_form = PizzaForm()
+        else:
+            created_pizza_pk = None
+            note = "Something went wrong: Your Pizza was not created. Please try again."
+        return render(request, 'pizza/order.html', {'created_pizza_pk':created_pizza_pk, 'pizzaform': filled_form, 'note': note, 'multiple_form':
                 multiple_form})
     else:
         form = PizzaForm()
@@ -40,7 +45,7 @@ def pizzas(request):
                 print(form.cleaned_data['topping1'])
             note = "Pizzas have been ordered!"
         else:
-            note: 'Order was not created, Please try again'
+            note = 'Order was not created, Please try again'
         return render(request, 'pizza/pizzas.html', {'note': note, 'formset': formset})
     else:
         # if fails at least return one order

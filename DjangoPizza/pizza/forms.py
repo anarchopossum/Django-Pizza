@@ -10,7 +10,7 @@ from .models import Pizza, Size
 
 class PizzaForm(forms.ModelForm):
     # we can adjust aspects of size with forms. We had to import Size for this too
-    size = forms.ModelChoiceField(queryset=Size.objects, empty_label=None, widget=forms.RadioSelect)
+    size = forms.ModelChoiceField(queryset=Size.objects, empty_label=None, widget=forms.Select)
 
     class Meta:
         model = Pizza
